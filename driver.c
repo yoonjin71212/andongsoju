@@ -95,8 +95,8 @@ void __exit clean_device(void) {
 	class_destroy(CLASS);
 	cdev_del(&cdev);
 	unregister_chrdev_region(dev,1);
-	kfree(__device_name__);
 	free_list(lst);
+	kfree(__device_name__);
 }
 
 int device_open (struct inode *inode , struct file *file ) {
@@ -111,17 +111,17 @@ ssize_t device_read (struct file * file,
 				char __user *buf,
 				size_t len,
 				loff_t *offset) {
-	int ret1,ret2;
+	int ret;
 	char * data = dequeue (lst);
 	if ( lst -> size == 0 ) 
 		return 0;
 		
-	ret2=copy_to_user(buf,data,sizeof(char *));
-	if((ret2<0)|(ret1<0)) {
-		printk( KERN_ERR "Copying data failed with error codes (%d,%d)", ret1, ret2);
+	ret=copy_to_user(buf,data,sizeof(char *));
+	if((ret<0)) {
+		printk( KERN_ERR "Copying data failed with error codes (%d)", ret);
 	}
 	lst->size--;
-	return (ssize_t)(sizeof(char *));
+	return (ssize_t)len;
 }
 ssize_t device_write (struct file * file,
 														const char *buf,
@@ -131,16 +131,13 @@ ssize_t device_write (struct file * file,
 	ktime_t tmp;
 	ssize_t ret = (ssize_t)len;
 	tmp=ktime_get_real();
-	data=kmalloc(sizeof(char)*(++len),GFP_KERNEL);
+	data=kmalloc(sizeof(char)*(len),GFP_KERNEL);
 	err = copy_from_user(data,buf,len);
 			
 	if(full(lst)) {
 		dequeue(lst);
 	}
 
-	if (err<0) {
-		return 0;
-	}
 	enqueue ( lst , data);
 	lst->size++;
 	return ret;
