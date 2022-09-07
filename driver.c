@@ -50,7 +50,6 @@ void GET_UUID (char * string) {
 			string[i]=UUID_TEXT[num];
 		}
 	}
-	
 }
 
 
@@ -89,7 +88,6 @@ int __init init_device (void) {
 	return 0;
 }
 void __exit clean_device(void) {
-
 	
 	device_destroy(CLASS,dev);	
 	class_destroy(CLASS);
@@ -97,10 +95,10 @@ void __exit clean_device(void) {
 	unregister_chrdev_region(dev,1);
 	free_list(lst);
 	kfree(__device_name__);
+
 }
 
 int device_open (struct inode *inode , struct file *file ) {
-	try_module_get(THIS_MODULE);	
 	return 0;
 }
 int device_release (struct inode *inode , struct file *file) {
@@ -118,15 +116,16 @@ ssize_t device_read (struct file * file,
 		
 	ret=copy_to_user(buf,data,sizeof(char *));
 	if((ret<0)) {
-		printk( KERN_ERR "Copying data failed with error codes (%d)", ret);
+		printk( KERN_ERR "Copying data failed with error codes (%d)", ret );
 	}
 	lst->size--;
 	return (ssize_t)len;
 }
 ssize_t device_write (struct file * file,
-														const char *buf,
-														size_t len,
-														loff_t *offset) {
+					const char *buf,
+					size_t len,
+					loff_t *offset)
+{
 	char * data;
 	ktime_t tmp;
 	ssize_t ret = (ssize_t)len;
