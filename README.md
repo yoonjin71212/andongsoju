@@ -1,7 +1,7 @@
 #  ANDONG_SOJU, Buffered device(FIFO)  
 
 
-###### <span style="color: #AAAAAA"> We eat from mouth, and we take a CRAP from ~~Ass-Hole~~ </span?
+###### <span style="color: #AAAAAA"> We eat from mouth, and we take a CRAP from ~~Ass-Hole~~ </span>
 
 
 
