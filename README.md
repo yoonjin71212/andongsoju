@@ -1,5 +1,1 @@
-img[alt="Result1"] {
-width: 1080px;
-}
-
-![Result1](./README.png)
+<img src="README.svg" alt="readme" width="150%"/>
