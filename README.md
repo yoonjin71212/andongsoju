@@ -1,3 +1,5 @@
 ![Image Caption](./README.png)
-<img src="./README.png" width="1080"></img>
+<div>
+<img src="./README.png" width="1600"></img>
+</div>
 
