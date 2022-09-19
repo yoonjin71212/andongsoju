@@ -1,2 +1,2 @@
-<img src="./README.png"></img>
+<img src="./README.png" width="1080"></img>
 
