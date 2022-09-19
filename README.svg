@@ -4,9 +4,9 @@
 <svg
    version="1.1"
    id="svg25"
-   width="793.27997"
-   height="1122.5601"
-   viewBox="0 0 793.27997 1122.5601"
+   width="793.59998"
+   height="1122.8799"
+   viewBox="0 0 793.59998 1122.8799"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
@@ -63,7 +63,7 @@
   </defs>
   <g
      id="g33"
-     transform="matrix(0.31999998,0,0,0.31999998,0,5.4730666e-5)">
+     transform="scale(0.31999998)">
     <g
        id="g35">
       <g
@@ -519,4 +519,18 @@
       </g>
     </g>
   </g>
+  <rect
+     style="fill:#ffffff"
+     id="rect565"
+     width="678.54382"
+     height="26.284864"
+     x="13.422126"
+     y="13.891061" />
+  <rect
+     style="fill:#ffffff"
+     id="rect567"
+     width="278.56717"
+     height="46.95282"
+     x="5.3062787"
+     y="1065.0684" />
 </svg>
