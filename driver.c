@@ -57,8 +57,8 @@ void GET_UUID (char * string)
 
 int __init init_device (void)
 {
-    CLASSNAME=kmalloc(sizeof(char)*36,GFP_USER);
-    __device_name__=kmalloc(sizeof(char)*36,GFP_USER);
+    CLASSNAME=kmalloc(sizeof(char)*36,GFP_KERNEL);
+    __device_name__=kmalloc(sizeof(char)*36,GFP_KERNEL);
     GET_UUID(CLASSNAME);
     GET_UUID(__device_name__);
     __MAJOR__=MAJOR(dev);
@@ -68,7 +68,7 @@ int __init init_device (void)
     if(err < 0) {
         printk(KERN_ERR "Registering Character Device failed with %d\n", err);
     }
-    lst=kmalloc(sizeof(list),GFP_USER);
+    lst=kmalloc(sizeof(list),GFP_KERNEL);
     init_list(lst);
     cdev_init(&cdev,&fops);
     cdev.owner = THIS_MODULE;
@@ -139,7 +139,7 @@ ssize_t device_write (struct file * file,
     ssize_t ret = (ssize_t)len;
     int err;
     char * data;
-    data=kmalloc(sizeof(char)*BUFFER_MAX,GFP_USER);
+    data=kmalloc(sizeof(char)*BUFFER_MAX,GFP_KERNEL);
     err = copy_from_user(data,buf,len);
     if(err<0) {
         return err;

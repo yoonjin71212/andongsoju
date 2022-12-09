@@ -1,0 +1,1 @@
+cmd_/home/yjlee/andongsoju/buffer.mod := printf '%s\n'   init_list.o swap.o find.o size.o remove.o between.o empty_list.o list.o driver.o sort.o | awk '!x[$$0]++ { print("/home/yjlee/andongsoju/"$$0) }' > /home/yjlee/andongsoju/buffer.mod
