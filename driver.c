@@ -123,14 +123,12 @@ ssize_t device_read (struct file * file,
     }
     nd = dequeue (lst);
     if(nd==NULL) {
-        mutex_unlock(&mtx);
         return 0;
     }
     ret=copy_to_user(buf,nd -> key,nd -> len + 1);
     if((ret<0)) {
         printk( KERN_ERR "Copying data failed with error codes (%d)", ret );
     }
-    mutex_unlock(&mtx);
     return (ssize_t)len;
 }
 ssize_t device_write (struct file * file,
@@ -144,14 +142,12 @@ ssize_t device_write (struct file * file,
     data=kmalloc(sizeof(char)*BUFFER_MAX,GFP_USER);
     err = copy_from_user(data,buf,len);
     if(err<0) {
-        mutex_unlock(&mtx);
         return err;
     }
     if(full(lst)) {
         dequeue(lst);
     }
     enqueue (lst,data,strlen(data));
-    mutex_unlock(&mtx);
     return ret;
 }
 

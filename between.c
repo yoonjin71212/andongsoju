@@ -5,7 +5,7 @@
 int8_t between( list * lst, char * item, node * b, node * n , uint64_t len )
 {
     node * element ;
-    if ( ( element = ( node * ) kmalloc ( sizeof ( node ), GFP_USER ) ) == NULL ) {
+    if ( ( element = ( node * ) kmalloc ( sizeof ( node ), GFP_KERNEL ) ) == NULL ) {
         return 1 ;
     }
     element->key = LST_ERR;
