@@ -18,7 +18,7 @@ void repair_size ( list * lst )   //you can use it when size could be corrupted 
 // check if list is full
 int8_t full ( list * lst )
 {
-    if ( lst -> size == BUFFER_MAX ) { // if list size is at its end
+    if ( lst -> size == LST_MAX ) { // if list size is at its end
         return 1 ;  //Returns 1
     }
 

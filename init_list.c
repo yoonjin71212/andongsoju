@@ -8,6 +8,8 @@ void init_list ( list * lst )   // init list
     lst -> rear -> prev = lst -> front ; //rear is directly connected to front
     lst -> front -> prev = lst -> front -> prev; //close the prev ptr to avoid invalid access
     lst -> rear -> next = lst ->rear ; //close the next ptr to avoid invalid access
+    lst -> front -> key = LST_ERR;
+    lst -> rear -> key =  LST_ERR;
     lst -> size = 0 ;
 }
 

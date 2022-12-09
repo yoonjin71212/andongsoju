@@ -1,12 +1,22 @@
 #include "buffer.h"
 #include <linux/slab.h>
 #include <linux/string.h>
-void swap_struct ( char * * a, char * * b )
+void swap_struct ( char * a, char * b )
 {
-    char * tmp; // Temporary variable;
-    tmp=*a; //store *a value to tmp
-    *a=*b; //store *b to *a
-    *b=tmp; //store tmp(previous data of a) to b
+    char **tmp;
+    tmp = &a;
+    memcpy(&a,&b,sizeof(char*));
+    memcpy(&b,tmp,sizeof(char*));
+    
 } //swaps two values.
+
+void swap_int(int64_t *a, int64_t *b) {
+    int64_t tmp;
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+
 
 MODULE_LICENSE("GPL");

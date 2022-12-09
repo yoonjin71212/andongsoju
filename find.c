@@ -16,6 +16,21 @@ node * find ( list * lst, unsigned char * key )
     }
     return p;//return the cursor; If there is no nodes with your provided data, it returns rear node.
 }
+ll index_of (list *lst , node *nd) { 
+				auto ll i;
+				node *p;
+				i=0;
+				p = lst -> front -> next;
+				while( p != lst ->rear ) {
+								if(!memcmp(p,lst->rear,sizeof(node))) {
+												return -1;
+								} else if (!memcmp(p,nd,sizeof(node))) {
+												return i;
+								}
+								i++;
+				}
+				return i;
+}
 node * index_node ( list * lst, ll i )
 {
     /*find target node's index. You can use your list
