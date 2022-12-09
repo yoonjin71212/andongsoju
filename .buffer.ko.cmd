@@ -1,1 +1,0 @@
-cmd_/home/yjlee/andongsoju/buffer.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T arch/x86/module.lds -o /home/yjlee/andongsoju/buffer.ko /home/yjlee/andongsoju/buffer.o /home/yjlee/andongsoju/buffer.mod.o;  true
