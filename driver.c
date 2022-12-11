@@ -14,6 +14,7 @@
 #include <linux/string.h>
 #include <asm/uaccess.h>
 #define NAME "BUFFER"
+#define BUFFER_MAX PREFIX
 int __MAJOR__;
 int __MINOR__;
 const char * UUID_TEXT="1234567890abcdefghijklmnopqrstuvwxyz";
@@ -116,8 +117,13 @@ ssize_t device_read (struct file * file,
                      size_t len,
                      loff_t *offset)
 {
+    static _Bool readable = 1;
     int ret;
     node *nd;
+    if(readable==0) {
+        readable = 1;
+        return (ssize_t)0;
+     }
     if ( !lst -> size ) {
         return 0;
     }
@@ -129,7 +135,8 @@ ssize_t device_read (struct file * file,
     if((ret<0)) {
         printk( KERN_ERR "Copying data failed with error codes (%d)", ret );
     }
-    return (ssize_t)len;
+    readable = 0;
+    return (ssize_t)(nd->len+1);
 }
 ssize_t device_write (struct file * file,
                       const char *buf,

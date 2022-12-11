@@ -61,8 +61,7 @@ void sortthree ( list * lst , _Bool is_ascending );
 ll index_of(list *lst , node *nd);
 long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg);
 _Bool comp(ll len_l, ll len_r, _Bool is_ascending);
-#define PREFIX 4096
-#define BUFFER_MAX PREFIX
+#define PREFIX 100000
 #define LST_MAX 10000
 #define UUID_LEN 36
  

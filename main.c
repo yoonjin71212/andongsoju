@@ -15,7 +15,7 @@ __BUF__ args;
 	if((fd=open(argv[1],O_RDWR))<0) {
 		perror("Open error");
 	}
-	ioctl(fd,__SORT_ASCENDING__,args);
+	ioctl(fd,__SORT_DESCENDING__,args);
 	if(close(fd)) {
 		perror("Close error");
 	}
