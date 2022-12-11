@@ -13,7 +13,6 @@
 #include <linux/types.h>
 #include <linux/string.h>
 #include <asm/uaccess.h>
-#define NAME "BUFFER"
 #define BUFFER_MAX PREFIX
 int __MAJOR__;
 int __MINOR__;
@@ -36,6 +35,7 @@ char * __device_name__;
 int cnt=1;
 dev_t dev;
 char *CLASSNAME;
+char *NAME;
 
 MODULE_LICENSE("GPL");
 void GET_UUID (char * string)
@@ -59,45 +59,52 @@ void GET_UUID (char * string)
 int __init init_device (void)
 {
     CLASSNAME=kmalloc(sizeof(char)*36,GFP_KERNEL);
+    NAME=kmalloc(sizeof(char)*36,GFP_KERNEL);
+    GET_UUID(NAME);   /*Name is by UUID */
     __device_name__=kmalloc(sizeof(char)*36,GFP_KERNEL);
-    GET_UUID(CLASSNAME);
-    GET_UUID(__device_name__);
-    __MAJOR__=MAJOR(dev);
-    __MINOR__=MINOR(dev);
+                                 /* * * * * * * * * */
+    GET_UUID(CLASSNAME);         /* Class name and  */
+    GET_UUID(__device_name__);   /* Device name is  */
+    __MAJOR__=MAJOR(dev);        /*   named by      */
+    __MINOR__=MINOR(dev);        /*   UUID          */
+                                 /* * * * * * * * * */
     dev=MKDEV(__MAJOR__,__MINOR__);
     err = alloc_chrdev_region(&dev,__MINOR__,cnt,NAME);
     if(err < 0) {
         printk(KERN_ERR "Registering Character Device failed with %d\n", err);
     }
-    lst=kmalloc(sizeof(list),GFP_KERNEL);
-    init_list(lst);
-    cdev_init(&cdev,&fops);
-    cdev.owner = THIS_MODULE;
-    err = cdev_add(&cdev,dev,cnt);
+    lst=kmalloc(sizeof(list),GFP_KERNEL);    /*List is allocated here*/
+    init_list(lst);                          /*Now, this initialized your list.*/
+    cdev_init(&cdev,&fops);                  /*Gonna initialize its cdev*/
+    cdev.owner = THIS_MODULE;                /*Owner is this module, obviously.*/
+    err = cdev_add(&cdev,dev,cnt);           /*Add this into target major/minor number*/
     if (err<0) {
-        printk(KERN_ALERT "cdev_add() failed with error code(%d)", err);
+        printk(KERN_ERR "cdev_add() failed with error code(%d)", err);  /* If it fails, it will show this */
     }
 
-    CLASS=class_create(THIS_MODULE,CLASSNAME);
+    CLASS=class_create(THIS_MODULE,CLASSNAME);  /* Okay, now register its class */
     if(IS_ERR(CLASS)) {
         printk(KERN_ERR "Creating Character Device Class failed");
-    }
+    }  /* Also, fail check is here */
 
 
 
     device_create(CLASS,NULL,dev,NULL,__device_name__);
-    printk (KERN_INFO "Buffered Device Initialized; Please check /dev/%s\n",__device_name__ );
+    
+    printk (KERN_INFO "Buffered Device Initialized; Please check /dev/%s\n",__device_name__ );   /* You can check its location *
+                                                                                                  * via dmesg command          */
     return 0;
 }
 void __exit clean_device(void)
 {
 
-    device_destroy(CLASS,dev);
-    class_destroy(CLASS);
-    cdev_del(&cdev);
-    unregister_chrdev_region(dev,1);
-    free_list(lst);
-    kfree(__device_name__);
+    device_destroy(CLASS,dev);   /* destroy its device */
+    class_destroy(CLASS);        /* and also its parent*/
+    cdev_del(&cdev);             /* delete cdev        */
+    unregister_chrdev_region(dev,1);  /* finally, unregister */
+    free_list(lst);           /* free that buffer !  */
+    kfree(__device_name__);   /* and...free its name */
+    kfree(CLASSNAME);
 
 }
 
@@ -117,7 +124,7 @@ ssize_t device_read (struct file * file,
                      size_t len,
                      loff_t *offset)
 {
-    static _Bool readable = 1;
+    static _Bool readable = 1; /*Read lock*/
     int ret;
     node *nd;
     if(readable==0) {
@@ -127,16 +134,16 @@ ssize_t device_read (struct file * file,
     if ( !lst -> size ) {
         return 0;
     }
-    nd = dequeue (lst);
+    nd = dequeue (lst); /* dequeue its data */
     if(nd==NULL) {
         return 0;
     }
-    ret=copy_to_user(buf,nd -> key,nd -> len + 1);
+    ret=copy_to_user(buf,nd -> key,nd -> len + 1); /* use its saved length */
     if((ret<0)) {
         printk( KERN_ERR "Copying data failed with error codes (%d)", ret );
     }
     readable = 0;
-    return (ssize_t)(nd->len+1);
+    return (ssize_t)(nd->len+1);/*use its saved length */
 }
 ssize_t device_write (struct file * file,
                       const char *buf,
@@ -146,20 +153,21 @@ ssize_t device_write (struct file * file,
     ssize_t ret = (ssize_t)len;
     int err;
     char * data;
-    data=kmalloc(sizeof(char)*BUFFER_MAX,GFP_KERNEL);
-    err = copy_from_user(data,buf,len);
+    data=kmalloc(sizeof(char)*BUFFER_MAX,GFP_KERNEL); /*allocates data region */
+    err = copy_from_user(data,buf,len);               /*Now, it will copy userdata into kernel area*/
     if(err<0) {
         return err;
     }
     if(full(lst)) {
-        dequeue(lst);
+        dequeue(lst);  /* if it is full, trashes its last data */
     }
-    enqueue (lst,data,strlen(data));
+    enqueue (lst,data,strlen(data));  /* Enqueue (char *) shaped data */
     return ret;
 }
 
 long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg) {
 
+    /*IOCTL Function calls, by command */
     switch(cmd) {
         case __CLEAR__:
             empty_list(lst);
@@ -175,7 +183,7 @@ long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg) 
         default :
             break;  
     }
-    printk(KERN_INFO "IOCTL Called, command number is (%d)", cmd);
+    printk(KERN_INFO "IOCTL Called, command number is (%d)", cmd); /*Log for IOCTL */
     return 0;
 }
 

@@ -7,6 +7,7 @@ _Bool comp( ll len_l, ll len_r, _Bool is_ascending ) {
     } else {
         return (_Bool)(len_l-len_r>=0);
     }
+    /* returns 0, or 1 by its flag */
 }
 _Bool regen_sorted( list * lst , _Bool is_ascending) {
     node * nd;
@@ -18,6 +19,7 @@ _Bool regen_sorted( list * lst , _Bool is_ascending) {
         }
     }
     return !ret;
+    /*regeneration of its state, for accurate status update*/
 }
 
 void sortthree ( list * lst , _Bool is_ascending)
@@ -41,6 +43,7 @@ void sortthree ( list * lst , _Bool is_ascending)
         swap_int ( &mid->len,&rear->len);
         swap_struct ( mid->key, rear->key );
     }
+    /* Sort picked three nodes, by its length */
 	
 }
 void sort_func ( list * lst , _Bool is_ascending )
@@ -57,7 +60,7 @@ void sort_func ( list * lst , _Bool is_ascending )
     init_list (&llst);
     init_list (&rlst);
     sortthree( lst , is_ascending );
-    piv = index_node ( lst, lst->size/2 ) /*lst -> front -> next*/;
+    piv = index_node ( lst, lst->size/2 ) ;
                 track = lst -> front -> next;
     for ( ; track != lst -> rear ; track = track -> next ) {
         key = piv -> key;
@@ -71,21 +74,25 @@ void sort_func ( list * lst , _Bool is_ascending )
         } else {
             enqueue ( &rlst, track -> key , track -> len );
         }
+        /* Split its keys by length */
     }
-    empty_list ( lst );
+    empty_list ( lst ); /*Preparing to sort...*/
     if ( llst.size > 1 ) {
-        sort_func ( &llst , is_ascending ) ;
+        sort_func ( &llst , is_ascending ) ; /* recursive function calls*/
     }
     if ( rlst.size > 1 ) {
-        sort_func ( &rlst, is_ascending ) ;
+        sort_func ( &rlst, is_ascending ) ; /*  recursive function calls*/
     }
+    /* Concatenates its left-ordered list */
     if ( llst.size > 0 ) {
         concat_list(lst,&llst);
     }
+    /* Concatenates its right-ordered list */
     enqueue( lst, key , len );
     if ( rlst.size > 0 ) {
         concat_list(lst,&rlst);
     }
     lst -> size = sz ;
     lst -> is_sorted = regen_sorted(lst,is_ascending);
+    /* Regenerate its flag*/
 }

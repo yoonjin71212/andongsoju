@@ -3,6 +3,7 @@ FLAGS := --warn-undefined-variables --debug -Wall -Werror -lm
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
 CC := gcc
+RAND := $(shell uuidgen)
 
 default:
 	$(MAKE) -C $(KDIR) $(FLAGS) M=$(PWD) LDDINC=$(PWD)/include modules
