@@ -34,7 +34,7 @@ typedef __buf_info_t__ __BUF__;
 |`__CLEAR__`|1|Clear buffer|**O**| 
 |`__SORT_ASCENDING__`|**2**|Sort buffer(ascending)|**O**|    
 |`__SORT_DESCENDING__`|**3**|Sort buffer(descending)|**O**|
-|`__SIZE_CALL__`|4|return buffer size|**)**|
+|`__SIZE_CALL__`|4|return buffer size|**O**|
 -----------------------------------------
     
 **Use with caution**
