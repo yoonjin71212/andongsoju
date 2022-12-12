@@ -66,7 +66,6 @@ void sort_func ( list * lst , _Bool is_ascending )
         key = piv -> key;
         len = piv -> len;
         if ( piv  == track ) {
-            track = track -> next ;
             continue;
         }
         if ( comp(track -> len , piv -> len, is_ascending) ) {

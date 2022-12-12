@@ -1,5 +1,5 @@
 
-## AndongSoju, Sortable FIFO Device
+## AndongSoju, Sortable FIFO Device Driver for Linux
 ![alt text](https://img.danawa.com/prod_img/500000/740/291/img/5291740_1.jpg?shrink=330:330&_v=20180830142133)
 
 # headers
@@ -31,10 +31,10 @@ typedef __buf_info_t__ __BUF__;
 # IOCTL comments as table
 |Name|Code|Task|Tested|
 |---|---|---|---|
-|`__CLEAR__`|1|Clear buffer|X| 
+|`__CLEAR__`|1|Clear buffer|**O**| 
 |`__SORT_ASCENDING__`|**2**|Sort buffer(ascending)|**O**|    
 |`__SORT_DESCENDING__`|**3**|Sort buffer(descending)|**O**|
-|`__SIZE_CALL__`|4|return buffer size|X|
+|`__SIZE_CALL__`|4|return buffer size|**)**|
 -----------------------------------------
     
 **Use with caution**
