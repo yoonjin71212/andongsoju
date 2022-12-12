@@ -169,19 +169,19 @@ long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg) 
 
     /*IOCTL Function calls, by command */
     switch(cmd) {
-        case __CLEAR__:
-            empty_list(lst);
-            break;  
-        case __SORT_ASCENDING__:
-            sort_func(lst,1); 
-            break;  
-        case __SORT_DESCENDING__:
-            sort_func(lst,0); 
-            break;  
-        case __SIZE_CALL__:
-            return (long int) size(lst);
-        default :
-            break;  
+    case __CLEAR__:
+        empty_list(lst);
+        break;  
+    case __SORT_ASCENDING__:
+        sort_func(lst,1); 
+        break;  
+    case __SORT_DESCENDING__:
+        sort_func(lst,0); 
+        break;  
+    case __SIZE_CALL__:
+        return (long int) size(lst);
+    default :
+        break;  
     }
     printk(KERN_INFO "IOCTL Called, command number is (%d)", cmd); /*Log for IOCTL */
     return 0;
