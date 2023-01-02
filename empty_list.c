@@ -1,6 +1,6 @@
 #include "buffer.h"
 #include <linux/slab.h>
-// function that empties list
+// function that empties list.
 void empty_list ( list * lst )
 {
     node * element = lst-> front->next ; // list is first value, that is next of the front node
