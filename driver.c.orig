@@ -62,12 +62,12 @@ int __init init_device (void)
     NAME=kmalloc(sizeof(char)*36,GFP_KERNEL);
     GET_UUID(NAME);   /*Name is by UUID */
     __device_name__=kmalloc(sizeof(char)*36,GFP_KERNEL);
-    /* * * * * * * * * */
+                                 /* * * * * * * * * */
     GET_UUID(CLASSNAME);         /* Class name and  */
     GET_UUID(__device_name__);   /* Device name is  */
     __MAJOR__=MAJOR(dev);        /*   named by      */
     __MINOR__=MINOR(dev);        /*   UUID          */
-    /* * * * * * * * * */
+                                 /* * * * * * * * * */
     dev=MKDEV(__MAJOR__,__MINOR__);
     err = alloc_chrdev_region(&dev,__MINOR__,cnt,NAME);
     if(err < 0) {
@@ -90,7 +90,7 @@ int __init init_device (void)
 
 
     device_create(CLASS,NULL,dev,NULL,__device_name__);
-
+    
     printk (KERN_INFO "Buffered Device Initialized; Please check /dev/%s\n",__device_name__ );   /* You can check its location *
                                                                                                   * via dmesg command          */
     return 0;
@@ -130,7 +130,7 @@ ssize_t device_read (struct file * file,
     if(readable==0) {
         readable = 1;
         return (ssize_t)0;
-    }
+     }
     if ( !lst -> size ) {
         return 0;
     }
@@ -165,24 +165,23 @@ ssize_t device_write (struct file * file,
     return ret;
 }
 
-long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg)
-{
+long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg) {
 
     /*IOCTL Function calls, by command */
     switch(cmd) {
     case __CLEAR__:
         empty_list(lst);
-        break;
+        break;  
     case __SORT_ASCENDING__:
-        sort_func(lst,1);
-        break;
+        sort_func(lst,1); 
+        break;  
     case __SORT_DESCENDING__:
-        sort_func(lst,0);
-        break;
+        sort_func(lst,0); 
+        break;  
     case __SIZE_CALL__:
         return (long int) size(lst);
     default :
-        break;
+        break;  
     }
     printk(KERN_INFO "IOCTL Called, command number is (%d)", cmd); /*Log for IOCTL */
     return 0;

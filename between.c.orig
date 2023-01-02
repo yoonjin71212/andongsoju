@@ -2,7 +2,7 @@
 #include <linux/string.h>
 #include <linux/slab.h>
 // add number between two nodes
-int8_t between( list * lst, char * item, node * b, node * n, uint64_t len )
+int8_t between( list * lst, char * item, node * b, node * n , uint64_t len )
 {
     node * element ;
     if ( ( element = ( node * ) kmalloc ( sizeof ( node ), GFP_KERNEL ) ) == NULL ) {
@@ -23,9 +23,9 @@ int8_t between( list * lst, char * item, node * b, node * n, uint64_t len )
     }
     return 0;
 }
-int8_t enqueue ( list * lst, const char * item, uint64_t len)
+int8_t enqueue ( list * lst, const char * item , uint64_t len)
 {
-    return between ( lst, (char *)item, lst-> rear -> prev,  lst -> rear, len);
+    return between ( lst, (char *)item, lst-> rear -> prev ,  lst -> rear , len);
 } // alias for enquque
 void concat_list ( list * lst, list * lst_target )
 {
