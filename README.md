@@ -29,7 +29,7 @@ typedef __buf_info_t__ __BUF__;
 #define LST_ERR "-100000000000"
 ```
 
-# IOCTL comments as table
+# IOCTL commands as table
 |Name|Code|Task|Tested|
 |---|---|---|---|
 |`__CLEAR__`|1|Clear buffer|**O**| 
@@ -39,7 +39,10 @@ typedef __buf_info_t__ __BUF__;
 -----------------------------------------
     
 **Use with caution**
+
 Sort is performed, with its item size in bytes.
+
+Device Driver's name format is /dev/${RANDOM_UUID}.
 
 I/O is performed as FIFO.
 
