@@ -41,6 +41,8 @@ typedef __buf_info_t__ __BUF__;
 **Use with caution**
 Sort is performed, with its item size in bytes.
 
+I/O is performed as FIFO.
+
 Adapt for any usage.
 
 You can change its allocation space.
