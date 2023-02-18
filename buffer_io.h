@@ -4,6 +4,8 @@ enum __IOCTL_CMD__ {
     /* SORT */
     __PROTO_SORT_ASCENDING__,
     __PROTO_SORT_DESCENDING__,
+    __PROTO_SORT_ORDER_ASCENDING__,
+    __PROTO_SORT_ORDER_DESCENDING__,
     /*-----*/
     __PROTO_SIZE_CALL__, /*Size request*/
 };
@@ -19,6 +21,8 @@ typedef __buf_info_t__ __BUF__; /*Easy name */
 #define __CLEAR__ _IOWR(IOCTL_MAGIC,__PROTO_CLEAR__, __buf_info_t__)
 #define __SORT_ASCENDING__ _IOWR(IOCTL_MAGIC,__PROTO_SORT_ASCENDING__, __buf_info_t__)
 #define __SORT_DESCENDING__ _IOWR(IOCTL_MAGIC,__PROTO_SORT_DESCENDING__, __buf_info_t__)
+#define __SORT_ORDER_ASCENDING__ _IOWR(IOCTL_MAGIC,__PROTO_SORT_ORDER_ASCENDING__, __buf_info_t__)
+#define __SORT_ORDER_DESCENDING__ _IOWR(IOCTL_MAGIC,__PROTO_SORT_ORDER_DESCENDING__, __buf_info_t__)
 #define __SIZE_CALL__ _IOWR(IOCTL_MAGIC,__PROTO_SIZE_CALL__, __buf_info_t__)
 /*-------------------------------*/
 /* This is error code for internal error detection */

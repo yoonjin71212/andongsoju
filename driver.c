@@ -14,6 +14,7 @@
 #include <linux/string.h>
 #include <asm/uaccess.h>
 #define BUFFER_MAX PREFIX
+uint64_t  __ORDER__ = 0;
 int __MAJOR__;
 int __MINOR__;
 const char * UUID_TEXT="1234567890abcdefghijklmnopqrstuvwxyz";
@@ -162,6 +163,8 @@ ssize_t device_write (struct file * file,
         dequeue(lst);  /* if it is full, trashes its last data */
     }
     enqueue (lst,data,strlen(data));  /* Enqueue (char *) shaped data */
+    lst->rear->prev->__len_key__ = __ORDER__;
+    __ORDER__++;
     return ret;
 }
 
@@ -178,6 +181,12 @@ long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg)
         break;
     case __SORT_DESCENDING__:
         sort_func(lst,0);
+        break;
+    case __SORT_ORDER_ASCENDING__:
+        __order_sort_func__(lst,1);
+        break;
+    case __SORT_ORDER_DESCENDING__:
+        __order_sort_func__(lst,0);
         break;
     case __SIZE_CALL__:
         return (long int) size(lst);

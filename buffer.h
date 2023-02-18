@@ -13,6 +13,7 @@ typedef long long ll;
 
 typedef struct node {
     char * key;
+    uint64_t __len_key__;
     uint64_t len;
     struct node * prev;
     struct node * next;
@@ -64,6 +65,8 @@ void GET_UUID (char * string) ;   /* UUID generation */
 
 void sort_func ( list * lst, _Bool is_ascending );  /* Quick sort */
 void sortthree ( list * lst, _Bool is_ascending );  /* Needed for Quick sort implementation */
+void __order_sort_func__ ( list * lst, _Bool is_ascending );  /* Quick sort */
+void __order_sortthree__ ( list * lst, _Bool is_ascending );  /* Needed for Quick sort implementation */
 ll index_of(list *lst, node *nd);     /* Index of specific node */
 long int __user io_sort(struct file *file, unsigned int cmd, unsigned long arg); /* IOCTL Function calls! */
 _Bool comp(ll len_l, ll len_r, _Bool is_ascending);    /* comparison between two long long, with flag */
