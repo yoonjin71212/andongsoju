@@ -73,12 +73,10 @@ void sort_func ( list * lst, _Bool is_ascending )
         }
 	if(sz<THRESHOLD) {
 	    if ( comp(track -> len, piv -> len, is_ascending) ) {
-	        swap_int (&piv->len,&track->len);
-	        swap_struct ( piv->key,track->key );
-	    } else {
-	        swap_int (&piv->len,&track->len);
-	        swap_struct ( piv->key,piv->key );
-	    }
+		    remove_item(lst,track);
+		    between(lst,track->key,piv->prev,piv,track->len);
+                    track = track->next;
+	    } 
 	} else {
             if ( comp(track -> len, piv -> len, is_ascending) ) {
                 enqueue ( &llst, track -> key, track -> len );
