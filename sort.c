@@ -33,18 +33,19 @@ void sortthree ( list * lst, _Bool is_ascending)
     if(lst->is_sorted) {
         return ;
     }
-    if (comp(front->len, mid->len,is_ascending) ) {
-        swap_int (&front->len,&mid->len);
-        swap_struct ( front->key,mid->key );
-    }
-    if (comp(front->len, rear->len,is_ascending) ) {
-        swap_int ( &front->len,&rear->len);
-        swap_struct ( front->key,rear->key );
-    }
-    if ( comp(mid->len, rear->len,is_ascending) ) {
-        swap_int ( &mid->len,&rear->len);
-        swap_struct ( mid->key, rear->key );
-    }
+
+        if (comp(front->len, mid->len,is_ascending) ) {
+            swap_int (&front->len,&mid->len);
+            swap_struct ( front->key,mid->key );
+        }
+        if (comp(front->len, rear->len,is_ascending) ) {
+            swap_int ( &front->len,&rear->len);
+            swap_struct ( front->key,rear->key );
+        }
+        if ( comp(mid->len, rear->len,is_ascending) ) {
+            swap_int ( &mid->len,&rear->len);
+            swap_struct ( mid->key, rear->key );
+        }
     /* Sort picked three nodes, by its length */
 
 }
@@ -70,28 +71,40 @@ void sort_func ( list * lst, _Bool is_ascending )
         if ( piv  == track ) {
             continue;
         }
-        if ( comp(track -> len, piv -> len, is_ascending) ) {
-            enqueue ( &llst, track -> key, track -> len );
-        } else {
-            enqueue ( &rlst, track -> key, track -> len );
+	if(sz<THRESHOLD) {
+	    if ( comp(track -> len, piv -> len, is_ascending) ) {
+	        swap_int (&piv->len,&track->len);
+	        swap_struct ( piv->key,track->key );
+	    } else {
+	        swap_int (&piv->len,&track->len);
+	        swap_struct ( piv->key,piv->key );
+	    }
+	} else {
+            if ( comp(track -> len, piv -> len, is_ascending) ) {
+                enqueue ( &llst, track -> key, track -> len );
+            } else {
+                enqueue ( &rlst, track -> key, track -> len );
+            }
         }
         /* Split its keys by length */
     }
-    empty_list ( lst ); /*Preparing to sort...*/
-    if ( llst.size > 1 ) {
-        sort_func ( &llst, is_ascending ) ;  /* recursive function calls*/
-    }
-    if ( rlst.size > 1 ) {
-        sort_func ( &rlst, is_ascending ) ; /*  recursive function calls*/
-    }
-    /* Concatenates its left-ordered list */
-    if ( llst.size > 0 ) {
-        concat_list(lst,&llst);
-    }
-    /* Concatenates its right-ordered list */
-    enqueue( lst, key, len );
-    if ( rlst.size > 0 ) {
-        concat_list(lst,&rlst);
+    if(sz>THRESHOLD) {
+        empty_list ( lst ); /*Preparing to sort...*/
+    	if ( llst.size > 1 ) {
+    	    sort_func ( &llst, is_ascending ) ;  /* recursive function calls*/
+    	}
+    	if ( rlst.size > 1 ) {
+    	    sort_func ( &rlst, is_ascending ) ; /*  recursive function calls*/
+    	}
+    	/* Concatenates its left-ordered list */
+    	if ( llst.size > 0 ) {
+    	    concat_list(lst,&llst);
+    	}
+    	/* Concatenates its right-ordered list */
+    	enqueue( lst, key, len );
+    	if ( rlst.size > 0 ) {
+    	    concat_list(lst,&rlst);
+    	}
     }
     lst -> size = sz ;
     lst -> is_sorted = regen_sorted(lst,is_ascending);
