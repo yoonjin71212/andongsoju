@@ -1,6 +1,6 @@
 
-## Sortable FIFO Device Driver for Linux
-# headers
+# Sortable FIFO Device Driver for Linux
+## headers
 ----------------
 ```c
 enum __IOCTL_CMD__ {
